@@ -5,8 +5,9 @@ import {useEffect, useRef, useState} from "react";
 
 export default function Home() {
   const [isDark, setIsDark] = useState(true);
-  const [activeSection, setActiveSection] = useState("");
+  const [activeSection, setActiveSection] = useState(0);
   const sectionsRef = useRef<(HTMLElement | null)[]>([]);
+  const sectionNames = ["intro", "work", "projects", "thoughts", "connect"];
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", isDark);
@@ -18,7 +19,10 @@ export default function Home() {
         for (const entry of entries) {
           if (entry.isIntersecting) {
             entry.target.classList.add("animate-fade-in-up");
-            setActiveSection(entry.target.id);
+            const sectionIndex = sectionNames.indexOf(entry.target.id);
+            if (sectionIndex !== -1) {
+              setActiveSection(sectionIndex);
+            }
           }
         }
       },
@@ -38,27 +42,106 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen bg-background text-foreground">
-      <nav className="-translate-y-1/2 fixed top-1/2 left-8 z-10 hidden lg:block">
-        <div className="flex flex-col gap-4">
-          {["intro", "work", "projects", "thoughts", "connect"].map((section) => (
-            <button
-              type="button"
-              key={section}
-              onClick={() =>
-                document
-                  .getElementById(section)
-                  ?.scrollIntoView({behavior: "smooth"})
-              }
-              className={`h-8 w-2 rounded-full transition-all duration-500 ${
-                activeSection === section
-                  ? "bg-foreground"
-                  : "bg-muted-foreground/30 hover:bg-muted-foreground/60"
-              }`}
-              aria-label={`Navigate to ${section}`}
-            />
-          ))}
+      {/* Desktop Navigation - Fixed Sidebar */}
+      <nav className="fixed top-1/2 left-8 z-10 hidden lg:block transform -translate-y-1/2">
+        <div className="flex flex-col gap-6">
+          {sectionNames.map((section, index) => {
+            const isActive = activeSection === index;
+            return (
+              <button
+                type="button"
+                key={section}
+                aria-label={`Navigate to ${section}`}
+                className="group relative flex h-4 w-4 items-center justify-center transition-all duration-300"
+                onClick={() => {
+                  const element = document.getElementById(section);
+                  if (element) {
+                    element.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
+              >
+                {/* Dot indicator */}
+                <div 
+                  className={`h-3 w-3 rounded-full border-2 transition-all duration-300 ${
+                    isActive 
+                      ? 'bg-foreground border-foreground scale-125' 
+                      : 'bg-transparent border-muted-foreground/50 hover:border-foreground hover:bg-foreground/20'
+                  }`}
+                />
+                {/* Active section line */}
+                {isActive && (
+                  <div className="absolute left-6 h-px w-8 bg-foreground transition-all duration-300" />
+                )}
+                {/* Tooltip */}
+                <div className="absolute left-8 ml-4 rounded bg-foreground px-2 py-1 text-xs text-background opacity-0 transition-opacity duration-200 group-hover:opacity-100 capitalize whitespace-nowrap">
+                  {section}
+                </div>
+              </button>
+            );
+          })}
         </div>
       </nav>
+
+      {/* Mobile Navigation - Top/Bottom */}
+      <div className="lg:hidden">
+        {/* Top mobile nav */}
+        <nav className="fixed top-4 left-4 right-4 z-10 flex justify-between">
+          <button
+            type="button"
+            aria-label="Scroll to top"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-background/80 backdrop-blur-sm border border-border transition-all duration-300 hover:bg-muted/50"
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+          >
+            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+            </svg>
+          </button>
+          
+          <div className="flex gap-2">
+            {sectionNames.map((section, index) => {
+              const isActive = activeSection === index;
+              return (
+                <button
+                  type="button"
+                  key={section}
+                  aria-label={`Navigate to ${section}`}
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-background/80 backdrop-blur-sm border border-border transition-all duration-300 hover:bg-muted/50"
+                  onClick={() => {
+                    const element = document.getElementById(section);
+                    if (element) {
+                      element.scrollIntoView({ behavior: "smooth" });
+                    }
+                  }}
+                >
+                  <div 
+                    className={`h-2 w-2 rounded-full transition-all duration-300 ${
+                      isActive ? 'bg-foreground scale-125' : 'bg-muted-foreground/50'
+                    }`}
+                  />
+                </button>
+              );
+            })}
+          </div>
+        </nav>
+        
+        {/* Bottom mobile nav */}
+        <nav className="fixed bottom-4 left-4 right-4 z-10 flex justify-center">
+          <button
+            type="button"
+            aria-label="Scroll to bottom"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-background/80 backdrop-blur-sm border border-border transition-all duration-300 hover:bg-muted/50"
+            onClick={() => {
+              window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+            }}
+          >
+            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+          </button>
+        </nav>
+      </div>
 
       <main className="mx-auto max-w-4xl px-6 sm:px-8 lg:px-16">
         <header
