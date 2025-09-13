@@ -376,6 +376,7 @@ export default function Home() {
                   tech: ["Next.js", "TypeScript", "Stripe", "Prisma"],
                   status: "Live",
                   year: "2024",
+                  slug: "ecommerce-platform",
                 },
                 {
                   title: "Task Management App",
@@ -384,6 +385,7 @@ export default function Home() {
                   tech: ["React", "Node.js", "Socket.io", "MongoDB"],
                   status: "Live",
                   year: "2023",
+                  slug: "task-management-app",
                 },
                 {
                   title: "Portfolio Website",
@@ -392,6 +394,7 @@ export default function Home() {
                   tech: ["Next.js", "Tailwind CSS", "Framer Motion"],
                   status: "Live",
                   year: "2024",
+                  slug: "portfolio-website",
                 },
                 {
                   title: "Analytics Dashboard",
@@ -400,11 +403,13 @@ export default function Home() {
                   tech: ["Vue.js", "D3.js", "Express", "PostgreSQL"],
                   status: "Live",
                   year: "2023",
+                  slug: "analytics-dashboard",
                 },
               ].map((project) => (
-                <article
+                <Link
                   key={project.title}
-                  className="group cursor-pointer rounded-lg border border-border p-6 transition-all duration-500 hover:border-muted-foreground/50 hover:shadow-lg sm:p-8"
+                  href={`/projects/${project.slug}`}
+                  className="group block rounded-lg border border-border p-6 transition-all duration-500 hover:border-muted-foreground/50 hover:shadow-lg sm:p-8"
                 >
                   <div className="space-y-4">
                     <div className="flex items-center justify-between font-mono text-muted-foreground text-xs">
@@ -453,7 +458,7 @@ export default function Home() {
                       </svg>
                     </div>
                   </div>
-                </article>
+                </Link>
               ))}
             </div>
           </div>
@@ -477,6 +482,7 @@ export default function Home() {
                     "Exploring how AI and automation are reshaping the way we build for the web.",
                   date: "Dec 2024",
                   readTime: "5 min",
+                  slug: "future-of-web-development",
                 },
                 {
                   title: "Design Systems at Scale",
@@ -484,6 +490,7 @@ export default function Home() {
                     "Lessons learned from building and maintaining design systems across multiple products.",
                   date: "Nov 2024",
                   readTime: "8 min",
+                  slug: "design-systems-at-scale",
                 },
                 {
                   title: "Performance-First Development",
@@ -491,6 +498,7 @@ export default function Home() {
                     "Why performance should be a first-class citizen in your development workflow.",
                   date: "Oct 2024",
                   readTime: "6 min",
+                  slug: "performance-first-development",
                 },
                 {
                   title: "The Art of Code Review",
@@ -498,11 +506,13 @@ export default function Home() {
                     "Building better software through thoughtful and constructive code reviews.",
                   date: "Sep 2024",
                   readTime: "4 min",
+                  slug: "art-of-code-review",
                 },
               ].map((post) => (
-                <article
+                <Link
                   key={post.title}
-                  className="group cursor-pointer rounded-lg border border-border p-6 transition-all duration-500 hover:border-muted-foreground/50 hover:shadow-lg sm:p-8"
+                  href={`/articles/${post.slug}`}
+                  className="group block rounded-lg border border-border p-6 transition-all duration-500 hover:border-muted-foreground/50 hover:shadow-lg sm:p-8"
                 >
                   <div className="space-y-4">
                     <div className="flex items-center justify-between font-mono text-muted-foreground text-xs">
@@ -538,7 +548,7 @@ export default function Home() {
                       </svg>
                     </div>
                   </div>
-                </article>
+                </Link>
               ))}
             </div>
           </div>
