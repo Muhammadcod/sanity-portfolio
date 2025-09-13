@@ -1,9 +1,9 @@
 "use client";
 import {ExternalLink, Github} from "lucide-react";
 import {useState} from "react";
-import {Badge} from "~/components/ui/badge";
-import {Button} from "~/components/ui/button";
-import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle,} from "~/components/ui/card";
+import {Badge} from "@/components/ui/badge";
+import {Button} from "@/components/ui/button";
+import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle,} from "@/components/ui/card";
 
 const projects = [
   {
@@ -85,8 +85,9 @@ export const ProjectsSection = () => {
     <section id="projects" className="px-4 py-16">
       <div className="container mx-auto">
         <h2
-          className="text-3xl md:text-4xl font-bold mb-4 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-12 after:h-1 after:bg-primary after:rounded mb-6"
-          data-aos="fade-up">
+          className="relative mb-4 mb-6 font-bold text-3xl after:absolute after:bottom-0 after:left-0 after:h-1 after:w-12 after:rounded after:bg-primary after:content-[''] md:text-4xl"
+          data-aos="fade-up"
+        >
           Projects
         </h2>
         <p
@@ -120,6 +121,7 @@ export const ProjectsSection = () => {
               <CardContent className="flex-grow">
                 <div className="mt-2 flex flex-wrap gap-2">
                   {project.technologies.map((tech, i) => (
+                    // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                     <Badge key={i} variant="secondary">
                       {tech}
                     </Badge>

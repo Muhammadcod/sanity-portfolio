@@ -40,7 +40,7 @@ export default function Home() {
     <div className="relative min-h-screen bg-background text-foreground">
       <nav className="-translate-y-1/2 fixed top-1/2 left-8 z-10 hidden lg:block">
         <div className="flex flex-col gap-4">
-          {["intro", "work", "thoughts", "connect"].map((section) => (
+          {["intro", "work", "projects", "thoughts", "connect"].map((section) => (
             <button
               type="button"
               key={section}
@@ -242,9 +242,105 @@ export default function Home() {
         </section>
 
         <section
-          id="thoughts"
+          id="projects"
           ref={(el) => {
             sectionsRef.current[2] = el;
+          }}
+          className="min-h-screen py-20 opacity-0 sm:py-32"
+        >
+          <div className="space-y-12 sm:space-y-16">
+            <h2 className="font-light text-3xl sm:text-4xl">Past Projects / Highlights</h2>
+
+            <div className="grid gap-6 sm:gap-8 lg:grid-cols-2">
+              {[
+                {
+                  title: "E-commerce Platform",
+                  description: "Built a full-stack e-commerce solution with Next.js, featuring user authentication, payment integration, and admin dashboard.",
+                  tech: ["Next.js", "TypeScript", "Stripe", "Prisma"],
+                  status: "Live",
+                  year: "2024",
+                },
+                {
+                  title: "Task Management App",
+                  description: "Developed a collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.",
+                  tech: ["React", "Node.js", "Socket.io", "MongoDB"],
+                  status: "Live",
+                  year: "2023",
+                },
+                {
+                  title: "Portfolio Website",
+                  description: "Designed and developed a responsive portfolio website with dark/light theme toggle and smooth animations.",
+                  tech: ["Next.js", "Tailwind CSS", "Framer Motion"],
+                  status: "Live",
+                  year: "2024",
+                },
+                {
+                  title: "Analytics Dashboard",
+                  description: "Created a comprehensive analytics dashboard with data visualization, real-time metrics, and customizable reporting features.",
+                  tech: ["Vue.js", "D3.js", "Express", "PostgreSQL"],
+                  status: "Live",
+                  year: "2023",
+                },
+              ].map((project) => (
+                <article
+                  key={project.title}
+                  className="group cursor-pointer rounded-lg border border-border p-6 transition-all duration-500 hover:border-muted-foreground/50 hover:shadow-lg sm:p-8"
+                >
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between font-mono text-muted-foreground text-xs">
+                      <span>{project.year}</span>
+                      <span className="rounded-full bg-muted px-2 py-1 text-xs">{project.status}</span>
+                    </div>
+
+                    <h3
+                      className="font-medium text-lg transition-colors duration-300 group-hover:text-muted-foreground sm:text-xl">
+                      {project.title}
+                    </h3>
+
+                    <p className="text-muted-foreground leading-relaxed">
+                      {project.description}
+                    </p>
+
+                    <div className="flex flex-wrap gap-2">
+                      {project.tech.map((tech) => (
+                        <span
+                          key={tech}
+                          className="rounded px-2 py-1 text-muted-foreground text-xs transition-colors duration-500 group-hover:border-muted-foreground/50"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div
+                      className="flex items-center gap-2 text-muted-foreground text-sm transition-colors duration-300 group-hover:text-foreground">
+                      <span>View project</span>
+                      <svg
+                        className="h-4 w-4 transform transition-transform duration-300 group-hover:translate-x-1"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M17 8l4 4m0 0l-4 4m4-4H3"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="thoughts"
+          ref={(el) => {
+            sectionsRef.current[3] = el;
           }}
           className="min-h-screen py-20 opacity-0 sm:py-32"
         >
@@ -329,7 +425,7 @@ export default function Home() {
         <section
           id="connect"
           ref={(el) => {
-            sectionsRef.current[3] = el;
+            sectionsRef.current[4] = el;
           }}
           className="py-20 opacity-0 sm:py-32"
         >

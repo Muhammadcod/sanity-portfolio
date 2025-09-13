@@ -1,5 +1,5 @@
 import {ArrowDown, ArrowRight} from "lucide-react";
-import {AnimatedBackground} from "~/components/animated-background";
+import {AnimatedBackground} from "@/components/animated-background";
 import Link from "next/link";
 
 export const HeroSection = () => {

@@ -1,9 +1,9 @@
 "use client";
 import {Github, Linkedin, Mail, MapPin, Phone, Send, Twitter,} from "lucide-react";
 import {useState} from "react";
-import {Button} from "~/components/ui/button";
-import {Input} from "~/components/ui/input";
-import {Textarea} from "~/components/ui/textarea";
+import {Button} from "@/components/ui/button";
+import {Input} from "@/components/ui/input";
+import {Textarea} from "@/components/ui/textarea";
 
 export const ContactSection = () => {
   // const { toast } = useToast();

@@ -3,8 +3,8 @@
 import {Menu, Moon, Sun, X} from "lucide-react";
 import {useTheme} from "next-themes";
 import * as React from "react";
-import {Button} from "~/components/ui/button";
-import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,} from "~/components/ui/dropdown-menu";
+import {Button} from "@/components/ui/button";
+import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu";
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = React.useState(false);
@@ -99,6 +99,7 @@ export function Navbar() {
           )}
 
           <button
+            type="button"
             className="p-2 text-foreground"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
