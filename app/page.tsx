@@ -43,7 +43,7 @@ export default function Home() {
   return (
     <div className="relative min-h-screen bg-background text-foreground">
       {/* Desktop Navigation - Fixed Sidebar */}
-      <nav className="fixed top-1/2 left-8 z-10 hidden lg:block transform -translate-y-1/2">
+      <nav className="-translate-y-1/2 fixed top-1/2 left-8 z-10 hidden transform lg:block">
         <div className="flex flex-col gap-6">
           {sectionNames.map((section, index) => {
             const isActive = activeSection === index;
@@ -56,24 +56,28 @@ export default function Home() {
                 onClick={() => {
                   const element = document.getElementById(section);
                   if (element) {
-                    element.scrollIntoView({ behavior: "smooth" });
+                    element.scrollIntoView({behavior: "smooth"});
                   }
                 }}
               >
                 {/* Dot indicator */}
-                <div 
+                <div
                   className={`h-3 w-3 rounded-full border-2 transition-all duration-300 ${
-                    isActive 
-                      ? 'bg-foreground border-foreground scale-125' 
-                      : 'bg-transparent border-muted-foreground/50 hover:border-foreground hover:bg-foreground/20'
+                    isActive
+                      ? "scale-125 border-foreground bg-foreground"
+                      : "border-muted-foreground/50 bg-transparent hover:border-foreground hover:bg-foreground/20"
                   }`}
                 />
-                {/* Active section line */}
+                {/* Active section label */}
                 {isActive && (
-                  <div className="absolute left-6 h-px w-8 bg-foreground transition-all duration-300" />
+                  <div
+                    className="absolute left-6 ml-2 whitespace-nowrap font-medium text-foreground text-sm capitalize transition-all duration-300">
+                    {section}
+                  </div>
                 )}
                 {/* Tooltip */}
-                <div className="absolute left-8 ml-4 rounded bg-foreground px-2 py-1 text-xs text-background opacity-0 transition-opacity duration-200 group-hover:opacity-100 capitalize whitespace-nowrap">
+                <div
+                  className="absolute left-8 ml-4 whitespace-nowrap rounded bg-foreground px-2 py-1 text-background text-xs capitalize opacity-0 transition-opacity duration-200 group-hover:opacity-100">
                   {section}
                 </div>
               </button>
@@ -85,20 +89,31 @@ export default function Home() {
       {/* Mobile Navigation - Top/Bottom */}
       <div className="lg:hidden">
         {/* Top mobile nav */}
-        <nav className="fixed top-4 left-4 right-4 z-10 flex justify-between">
+        <nav className="fixed top-4 right-4 left-4 z-10 flex justify-between">
           <button
             type="button"
             aria-label="Scroll to top"
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-background/80 backdrop-blur-sm border border-border transition-all duration-300 hover:bg-muted/50"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background/80 backdrop-blur-sm transition-all duration-300 hover:bg-muted/50"
             onClick={() => {
-              window.scrollTo({ top: 0, behavior: "smooth" });
+              window.scrollTo({top: 0, behavior: "smooth"});
             }}
           >
-            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+            <svg
+              className="h-4 w-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 10l7-7m0 0l7 7m-7-7v18"
+              />
             </svg>
           </button>
-          
+
           <div className="flex gap-2">
             {sectionNames.map((section, index) => {
               const isActive = activeSection === index;
@@ -107,17 +122,19 @@ export default function Home() {
                   type="button"
                   key={section}
                   aria-label={`Navigate to ${section}`}
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-background/80 backdrop-blur-sm border border-border transition-all duration-300 hover:bg-muted/50"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background/80 backdrop-blur-sm transition-all duration-300 hover:bg-muted/50"
                   onClick={() => {
                     const element = document.getElementById(section);
                     if (element) {
-                      element.scrollIntoView({ behavior: "smooth" });
+                      element.scrollIntoView({behavior: "smooth"});
                     }
                   }}
                 >
-                  <div 
+                  <div
                     className={`h-2 w-2 rounded-full transition-all duration-300 ${
-                      isActive ? 'bg-foreground scale-125' : 'bg-muted-foreground/50'
+                      isActive
+                        ? "scale-125 bg-foreground"
+                        : "bg-muted-foreground/50"
                     }`}
                   />
                 </button>
@@ -125,19 +142,33 @@ export default function Home() {
             })}
           </div>
         </nav>
-        
+
         {/* Bottom mobile nav */}
-        <nav className="fixed bottom-4 left-4 right-4 z-10 flex justify-center">
+        <nav className="fixed right-4 bottom-4 left-4 z-10 flex justify-center">
           <button
             type="button"
             aria-label="Scroll to bottom"
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-background/80 backdrop-blur-sm border border-border transition-all duration-300 hover:bg-muted/50"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background/80 backdrop-blur-sm transition-all duration-300 hover:bg-muted/50"
             onClick={() => {
-              window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+              window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: "smooth",
+              });
             }}
           >
-            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            <svg
+              className="h-4 w-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 14l-7 7m0 0l-7-7m7 7V3"
+              />
             </svg>
           </button>
         </nav>
@@ -234,7 +265,7 @@ export default function Home() {
             <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <h2 className="font-light text-3xl sm:text-4xl">Selected Work</h2>
               <div className="font-mono text-muted-foreground text-sm">
-                2021 — 2025
+                2020 — 2025
               </div>
             </div>
 
@@ -332,34 +363,40 @@ export default function Home() {
           className="min-h-screen py-20 opacity-0 sm:py-32"
         >
           <div className="space-y-12 sm:space-y-16">
-            <h2 className="font-light text-3xl sm:text-4xl">Past Projects / Highlights</h2>
+            <h2 className="font-light text-3xl sm:text-4xl">
+              Past Projects / Highlights
+            </h2>
 
             <div className="grid gap-6 sm:gap-8 lg:grid-cols-2">
               {[
                 {
                   title: "E-commerce Platform",
-                  description: "Built a full-stack e-commerce solution with Next.js, featuring user authentication, payment integration, and admin dashboard.",
+                  description:
+                    "Built a full-stack e-commerce solution with Next.js, featuring user authentication, payment integration, and admin dashboard.",
                   tech: ["Next.js", "TypeScript", "Stripe", "Prisma"],
                   status: "Live",
                   year: "2024",
                 },
                 {
                   title: "Task Management App",
-                  description: "Developed a collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.",
+                  description:
+                    "Developed a collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.",
                   tech: ["React", "Node.js", "Socket.io", "MongoDB"],
                   status: "Live",
                   year: "2023",
                 },
                 {
                   title: "Portfolio Website",
-                  description: "Designed and developed a responsive portfolio website with dark/light theme toggle and smooth animations.",
+                  description:
+                    "Designed and developed a responsive portfolio website with dark/light theme toggle and smooth animations.",
                   tech: ["Next.js", "Tailwind CSS", "Framer Motion"],
                   status: "Live",
                   year: "2024",
                 },
                 {
                   title: "Analytics Dashboard",
-                  description: "Created a comprehensive analytics dashboard with data visualization, real-time metrics, and customizable reporting features.",
+                  description:
+                    "Created a comprehensive analytics dashboard with data visualization, real-time metrics, and customizable reporting features.",
                   tech: ["Vue.js", "D3.js", "Express", "PostgreSQL"],
                   status: "Live",
                   year: "2023",
@@ -372,7 +409,9 @@ export default function Home() {
                   <div className="space-y-4">
                     <div className="flex items-center justify-between font-mono text-muted-foreground text-xs">
                       <span>{project.year}</span>
-                      <span className="rounded-full bg-muted px-2 py-1 text-xs">{project.status}</span>
+                      <span className="rounded-full bg-muted px-2 py-1 text-xs">
+                        {project.status}
+                      </span>
                     </div>
 
                     <h3
