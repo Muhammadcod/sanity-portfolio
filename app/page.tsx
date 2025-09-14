@@ -461,6 +461,28 @@ export default function Home() {
                 </Link>
               ))}
             </div>
+
+            <div className="mt-12 text-center">
+              <Link
+                href="/projects"
+                className="inline-flex items-center gap-2 rounded-lg border border-border px-6 py-3 font-medium transition-all duration-300 hover:border-muted-foreground/50 hover:shadow-lg"
+              >
+                See All Projects
+                <svg
+                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </Link>
+            </div>
           </div>
         </section>
 
