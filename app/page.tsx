@@ -1,5 +1,6 @@
 "use client";
 
+import { projects } from "@/lib/data";
 import Link from "next/link";
 import {useEffect, useRef, useState} from "react";
 
@@ -368,44 +369,7 @@ export default function Home() {
             </h2>
 
             <div className="grid gap-6 sm:gap-8 lg:grid-cols-2">
-              {[
-                {
-                  title: "E-commerce Platform",
-                  description:
-                    "Built a full-stack e-commerce solution with Next.js, featuring user authentication, payment integration, and admin dashboard.",
-                  tech: ["Next.js", "TypeScript", "Stripe", "Prisma"],
-                  status: "Live",
-                  year: "2024",
-                  slug: "ecommerce-platform",
-                },
-                {
-                  title: "Task Management App",
-                  description:
-                    "Developed a collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.",
-                  tech: ["React", "Node.js", "Socket.io", "MongoDB"],
-                  status: "Live",
-                  year: "2023",
-                  slug: "task-management-app",
-                },
-                {
-                  title: "Portfolio Website",
-                  description:
-                    "Designed and developed a responsive portfolio website with dark/light theme toggle and smooth animations.",
-                  tech: ["Next.js", "Tailwind CSS", "Framer Motion"],
-                  status: "Live",
-                  year: "2024",
-                  slug: "portfolio-website",
-                },
-                {
-                  title: "Analytics Dashboard",
-                  description:
-                    "Created a comprehensive analytics dashboard with data visualization, real-time metrics, and customizable reporting features.",
-                  tech: ["Vue.js", "D3.js", "Express", "PostgreSQL"],
-                  status: "Live",
-                  year: "2023",
-                  slug: "analytics-dashboard",
-                },
-              ].map((project) => (
+              {projects.slice(0, 4).map((project) => (
                 <Link
                   key={project.title}
                   href={`/projects/${project.slug}`}
