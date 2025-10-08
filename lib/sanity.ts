@@ -1,4 +1,6 @@
 import { client } from '@/sanity/lib/client'
+// Backward-compatible alias for legacy imports expecting `sanityClient`
+export const sanityClient = client
 import {
   projectsQuery,
   featuredProjectsQuery,
