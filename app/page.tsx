@@ -1,14 +1,30 @@
 "use client";
 
-import { projects } from "@/lib/data";
+import { getFeaturedProjects, SanityProject } from "@/lib/sanity";
 import Link from "next/link";
 import {useEffect, useRef, useState} from "react";
 
 export default function Home() {
-  const [isDark, setIsDark] = useState(true);
+  const [isDark, setIsDark] = useState(false);
   const [activeSection, setActiveSection] = useState(0);
+  const [projects, setProjects] = useState<SanityProject[]>([]);
   const sectionsRef = useRef<(HTMLElement | null)[]>([]);
   const sectionNames = ["intro", "work", "projects", "thoughts", "connect"];
+
+  console.log(projects)
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const fetchedProjects = await getFeaturedProjects();
+        setProjects(fetchedProjects);
+      } catch (error) {
+        console.error('Error fetching projects:', error);
+      }
+    };
+    
+    fetchProjects();
+  }, []);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", isDark);
@@ -369,16 +385,16 @@ export default function Home() {
             </h2>
 
             <div className="grid gap-6 sm:gap-8 lg:grid-cols-2">
-              {projects.slice(0, 4).map((project) => (
+              {projects.slice(0, 4).map((project: SanityProject) => (
                 <Link
-                  key={project.title}
-                  href={`/projects/${project.slug}`}
+                  key={project._id}
+                  href={`/projects/${project.slug.current}`}
                   className="group block rounded-lg border border-border p-6 transition-all duration-500 hover:border-muted-foreground/50 hover:shadow-lg sm:p-8"
                 >
                   <div className="space-y-4">
                     <div className="flex items-center justify-between font-mono text-muted-foreground text-xs">
-                      <span>{project.year}</span>
-                      <span className="rounded-full bg-muted px-2 py-1 text-xs">
+                      <span>{new Date(project.year).getFullYear()}</span>
+                      <span className="rounded-full bg-muted px-2 py-1 text-xs capitalize">
                         {project.status}
                       </span>
                     </div>
@@ -393,9 +409,9 @@ export default function Home() {
                     </p>
 
                     <div className="flex flex-wrap gap-2">
-                      {project.tech.map((tech) => (
+                      {project.technologies.map((tech: string, index: number) => (
                         <span
-                          key={tech}
+                          key={index}
                           className="rounded px-2 py-1 text-muted-foreground text-xs transition-colors duration-500 group-hover:border-muted-foreground/50"
                         >
                           {tech}
