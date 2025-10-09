@@ -1,12 +1,10 @@
-import { client } from '@/sanity/lib/client'
-// Backward-compatible alias for legacy imports expecting `sanityClient`
-export const sanityClient = client
+import {client} from '@/sanity/lib/client'
 import {
-  projectsQuery,
   featuredProjectsQuery,
   projectBySlugQuery,
-  projectsByCategoryQuery,
   projectCategoriesQuery,
+  projectsByCategoryQuery,
+  projectsQuery,
   projectStatsQuery
 } from '@/sanity/lib/queries'
 
@@ -60,7 +58,7 @@ export class ProjectService {
     try {
       const projects = await client.fetch(projectsQuery, {}, {
         cache: 'force-cache',
-        next: { revalidate: 3600 } // Revalidate every hour
+        next: {revalidate: 3600} // Revalidate every hour
       })
       return projects || []
     } catch (error) {
@@ -76,7 +74,7 @@ export class ProjectService {
     try {
       const projects = await client.fetch(featuredProjectsQuery, {}, {
         cache: 'force-cache',
-        next: { revalidate: 3600 }
+        next: {revalidate: 3600}
       })
       return projects || []
     } catch (error) {
@@ -90,9 +88,9 @@ export class ProjectService {
    */
   static async getProjectBySlug(slug: string): Promise<SanityProject | null> {
     try {
-      const project = await client.fetch(projectBySlugQuery, { slug }, {
+      const project = await client.fetch(projectBySlugQuery, {slug}, {
         cache: 'force-cache',
-        next: { revalidate: 3600 }
+        next: {revalidate: 3600}
       })
       return project || null
     } catch (error) {
@@ -106,9 +104,9 @@ export class ProjectService {
    */
   static async getProjectsByCategory(category: string): Promise<SanityProject[]> {
     try {
-      const projects = await client.fetch(projectsByCategoryQuery, { category }, {
+      const projects = await client.fetch(projectsByCategoryQuery, {category}, {
         cache: 'force-cache',
-        next: { revalidate: 3600 }
+        next: {revalidate: 3600}
       })
       return projects || []
     } catch (error) {
@@ -124,9 +122,9 @@ export class ProjectService {
     try {
       const categories = await client.fetch(projectCategoriesQuery, {}, {
         cache: 'force-cache',
-        next: { revalidate: 7200 } // Revalidate every 2 hours
+        next: {revalidate: 7200} // Revalidate every 2 hours
       })
-      
+
       // Extract unique categories
       const uniqueCategories = [...new Set(categories.map((item: ProjectCategory) => item.category))]
       return uniqueCategories.filter(Boolean) as string[]
@@ -143,7 +141,7 @@ export class ProjectService {
     try {
       const stats = await client.fetch(projectStatsQuery, {}, {
         cache: 'force-cache',
-        next: { revalidate: 3600 }
+        next: {revalidate: 3600}
       })
       return stats || {
         total: 0,
@@ -187,8 +185,8 @@ export class ProjectService {
           githubUrl
         }
       `
-      
-      const projects = await client.fetch(searchQuery, { searchTerm }, {
+
+      const projects = await client.fetch(searchQuery, {searchTerm}, {
         cache: 'no-store' // Don't cache search results
       })
       return projects || []
