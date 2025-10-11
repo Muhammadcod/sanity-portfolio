@@ -5,10 +5,11 @@ import {
   projectCategoriesQuery,
   projectsByCategoryQuery,
   projectsQuery,
-  projectStatsQuery
+  projectStatsQuery,
+  articleBySlugQuery,
+  recentArticlesQuery
 } from '@/sanity/lib/queries'
 
-// TypeScript interfaces for project data
 export interface SanityProject {
   _id: string
   _createdAt: string
@@ -47,6 +48,35 @@ export interface ProjectStats {
 
 export interface ProjectCategory {
   category: string
+}
+
+// Types for articles
+export interface SanityArticle {
+  _id: string
+  _createdAt: string
+  _updatedAt: string
+  title: string
+  slug: { current: string }
+  author?: string
+  excerpt?: string
+  coverImage?: string
+  coverImageAlt?: string
+  publishedAt?: string
+  readTime?: string
+  tags?: string[]
+  externalUrl?: string
+  content: any // Portable Text blocks
+}
+
+// Summary type for listing articles on the homepage
+export interface SanityArticleSummary {
+  _id: string
+  title: string
+  slug: { current: string }
+  excerpt?: string
+  publishedAt?: string
+  readTime?: string
+  tags?: string[]
 }
 
 // Service functions for fetching project data
@@ -197,6 +227,41 @@ export class ProjectService {
   }
 }
 
+// Service functions for fetching article data
+export class ArticleService {
+  /**
+   * Fetch a single article by slug
+   */
+  static async getArticleBySlug(slug: string): Promise<SanityArticle | null> {
+    try {
+      const article = await client.fetch(articleBySlugQuery, {slug}, {
+        cache: 'force-cache',
+        next: {revalidate: 3600}
+      })
+      return article || null
+    } catch (error) {
+      console.error(`Error fetching article with slug ${slug}:`, error)
+      return null
+    }
+  }
+
+  /**
+   * Fetch recent articles for homepage Thoughts section
+   */
+  static async getRecentArticles(): Promise<SanityArticleSummary[]> {
+    try {
+      const articles = await client.fetch(recentArticlesQuery, {}, {
+        cache: 'force-cache',
+        next: { revalidate: 1800 } // Revalidate every 30 minutes
+      })
+      return articles || []
+    } catch (error) {
+      console.error('Error fetching recent articles:', error)
+      return []
+    }
+  }
+}
+
 // Export individual functions for convenience
 export const {
   getAllProjects,
@@ -207,3 +272,5 @@ export const {
   getProjectStats,
   searchProjects
 } = ProjectService
+
+export const { getArticleBySlug, getRecentArticles } = ArticleService

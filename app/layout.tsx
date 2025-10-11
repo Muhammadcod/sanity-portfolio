@@ -2,6 +2,7 @@ import type React from "react";
 import type {Metadata} from "next";
 import {Geist} from "next/font/google";
 import "./globals.css";
+import { SanityLive } from "@/sanity/lib/live";
 
 const geist = Geist({
   subsets: ["latin"],
@@ -22,7 +23,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geist.variable}`}>
-    <body className="font-sans antialiased">{children}</body>
+    <body className="font-sans antialiased">
+      {children}
+      <SanityLive />
+    </body>
     </html>
   );
 }

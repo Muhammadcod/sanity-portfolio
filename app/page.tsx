@@ -1,13 +1,15 @@
 "use client";
 
-import { getFeaturedProjects, SanityProject } from "@/lib/sanity";
+import { getFeaturedProjects, getRecentArticles, SanityProject, SanityArticleSummary } from "@/lib/sanity";
 import Link from "next/link";
 import {useEffect, useRef, useState} from "react";
 
 export default function Home() {
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(true);
   const [activeSection, setActiveSection] = useState(0);
   const [projects, setProjects] = useState<SanityProject[]>([]);
+  const [recentArticles, setRecentArticles] = useState<SanityArticleSummary[]>([]);
+  const [loadingArticles, setLoadingArticles] = useState(false);
   const sectionsRef = useRef<(HTMLElement | null)[]>([]);
   const sectionNames = ["intro", "work", "projects", "thoughts", "connect"];
 
@@ -24,6 +26,22 @@ export default function Home() {
     };
     
     fetchProjects();
+  }, []);
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        setLoadingArticles(true);
+        const fetchedArticles = await getRecentArticles();
+        setRecentArticles(Array.isArray(fetchedArticles) ? fetchedArticles.slice(0, 4) : []);
+      } catch (error) {
+        console.error('Error fetching recent articles:', error);
+        setRecentArticles([]);
+      } finally {
+        setLoadingArticles(false);
+      }
+    };
+    fetchArticles();
   }, []);
 
   useEffect(() => {
@@ -475,51 +493,23 @@ export default function Home() {
         >
           <div className="space-y-12 sm:space-y-16">
             <h2 className="font-light text-3xl sm:text-4xl">Recent Thoughts</h2>
-
             <div className="grid gap-6 sm:gap-8 lg:grid-cols-2">
-              {[
-                {
-                  title: "The Future of Web Development",
-                  excerpt:
-                    "Exploring how AI and automation are reshaping the way we build for the web.",
-                  date: "Dec 2024",
-                  readTime: "5 min",
-                  slug: "future-of-web-development",
-                },
-                {
-                  title: "Design Systems at Scale",
-                  excerpt:
-                    "Lessons learned from building and maintaining design systems across multiple products.",
-                  date: "Nov 2024",
-                  readTime: "8 min",
-                  slug: "design-systems-at-scale",
-                },
-                {
-                  title: "Performance-First Development",
-                  excerpt:
-                    "Why performance should be a first-class citizen in your development workflow.",
-                  date: "Oct 2024",
-                  readTime: "6 min",
-                  slug: "performance-first-development",
-                },
-                {
-                  title: "The Art of Code Review",
-                  excerpt:
-                    "Building better software through thoughtful and constructive code reviews.",
-                  date: "Sep 2024",
-                  readTime: "4 min",
-                  slug: "art-of-code-review",
-                },
-              ].map((post) => (
+              {loadingArticles && (
+                <div className="text-muted-foreground">Loading articles...</div>
+              )}
+              {!loadingArticles && recentArticles.length === 0 && (
+                <div className="text-muted-foreground">No articles found.</div>
+              )}
+              {!loadingArticles && recentArticles.length > 0 && recentArticles.map((post) => (
                 <Link
-                  key={post.title}
-                  href={`/articles/${post.slug}`}
+                  key={post._id}
+                  href={`/articles/${post.slug.current}`}
                   className="group block rounded-lg border border-border p-6 transition-all duration-500 hover:border-muted-foreground/50 hover:shadow-lg sm:p-8"
                 >
                   <div className="space-y-4">
                     <div className="flex items-center justify-between font-mono text-muted-foreground text-xs">
-                      <span>{post.date}</span>
-                      <span>{post.readTime}</span>
+                      <span>{post.publishedAt ? new Date(post.publishedAt).toLocaleDateString(undefined, { month: 'short', year: 'numeric' }) : ''}</span>
+                      <span>{post.readTime || ''}</span>
                     </div>
 
                     <h3
@@ -527,9 +517,11 @@ export default function Home() {
                       {post.title}
                     </h3>
 
-                    <p className="text-muted-foreground leading-relaxed">
-                      {post.excerpt}
-                    </p>
+                    {post.excerpt && (
+                      <p className="text-muted-foreground leading-relaxed">
+                        {post.excerpt}
+                      </p>
+                    )}
 
                     <div
                       className="flex items-center gap-2 text-muted-foreground text-sm transition-colors duration-300 group-hover:text-foreground">

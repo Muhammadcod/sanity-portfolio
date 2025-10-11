@@ -58,6 +58,7 @@ export const projectBySlugQuery = groq`
     longDescription,
     "image": image.asset->url,
     "imageAlt": image.alt,
+    year,
     category,
     status,
     featured,
@@ -70,6 +71,7 @@ export const projectBySlugQuery = groq`
     githubUrl,
     demoUrl,
     tags[],
+    "gallery": gallery[].asset->url,
     "relatedProjects": *[_type == "project" && slug.current != $slug && category == ^.category][0...3] {
       _id,
       title,
@@ -115,5 +117,38 @@ export const projectStatsQuery = groq`
     "inProgress": count(*[_type == "project" && status == "in-progress"]),
     "planned": count(*[_type == "project" && status == "planned"]),
     "featured": count(*[_type == "project" && featured == true])
+  }
+`
+
+// Query to fetch a single article by slug
+export const articleBySlugQuery = groq`
+  *[_type == "article" && slug.current == $slug][0] {
+    _id,
+    _createdAt,
+    _updatedAt,
+    title,
+    slug,
+    author,
+    excerpt,
+    "coverImage": coverImage.asset->url,
+    "coverImageAlt": coverImage.alt,
+    publishedAt,
+    readTime,
+    tags[],
+    externalUrl,
+    content
+  }
+`
+
+// Query to fetch recent articles for the homepage Thoughts section
+export const recentArticlesQuery = groq`
+  *[_type == "article"] | order(publishedAt desc)[0...4] {
+    _id,
+    title,
+    slug,
+    excerpt,
+    publishedAt,
+    readTime,
+    tags[]
   }
 `

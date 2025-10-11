@@ -1,5 +1,6 @@
 ---
 Nickname: Muhbiy
 Role: Engineer
-Experience Level: Senior
+Experience Level: Intermediate
+AI Personality: Professional
 ---
