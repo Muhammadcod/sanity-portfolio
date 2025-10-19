@@ -12,6 +12,7 @@ export const projectsQuery = groq`
     longDescription,
     "image": image.asset->url,
     "imageAlt": image.alt,
+    year,
     category,
     status,
     featured,
