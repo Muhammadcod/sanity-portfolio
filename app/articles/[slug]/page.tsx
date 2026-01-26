@@ -102,8 +102,8 @@ const portableTextComponents: PortableTextComponents = {
   }
 }
 
-export default async function ArticleDetail({ params }: { params: { slug: string } }) {
-  const { slug } = params
+export default async function ArticleDetail({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
   const article = await getArticleBySlug(slug)
 
   if (!article) {

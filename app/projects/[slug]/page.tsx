@@ -5,10 +5,11 @@ import ProjectDetailClient from '@/app/projects/[slug]/ProjectDetailClient';
 
 type ProjectDetail = SanityProject & { gallery?: string[] };
 
-export default async function ProjectDetailPage({ params }: { params: { slug: string } }) {
+export default async function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   const { data } = await sanityFetch({
     query: projectBySlugQuery,
-    params: { slug: params.slug },
+    params: { slug },
   });
 
   if (!data) {

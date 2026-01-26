@@ -306,22 +306,22 @@ export default function Home() {
 
             <div className="space-y-8 sm:space-y-12">
               {[
-                {
-                  year: "2024",
-                  role: "Frontend Developer",
-                  company: "Borderpal",
-                  description:
-                    "Led the end-to-end development of Borderpal's frontend, building the platform from scratch using React/Next.js. Designed and implemented scalable architecture, reusable UI components, and API integrations.",
-                  tech: ["Next.js", "Tailwind CSS"],
-                },
-                {
-                  year: "2021",
-                  role: "Frontend Developer",
-                  company: "Midst",
-                  description:
-                    "Contributed to building and optimizing frontend applications, ensuring seamless user experiences through modern frameworks and scalable UI components.",
-                  tech: ["React", "Next.js"],
-                },
+                // {
+                //   year: "2024",
+                //   role: "Frontend Developer",
+                //   company: "Borderpal",
+                //   description:
+                //     "Led the end-to-end development of Borderpal's frontend, building the platform from scratch using React/Next.js. Designed and implemented scalable architecture, reusable UI components, and API integrations.",
+                //   tech: ["Next.js", "Tailwind CSS"],
+                // },
+                // {
+                //   year: "2021",
+                //   role: "Frontend Developer",
+                //   company: "Midst",
+                //   description:
+                //     "Contributed to building and optimizing frontend applications, ensuring seamless user experiences through modern frameworks and scalable UI components.",
+                //   tech: ["React", "Next.js"],
+                // },
                 {
                   year: "2021",
                   role: "Frontend Developer",
