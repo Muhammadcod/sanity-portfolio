@@ -142,15 +142,15 @@ export const projectType = defineType({
     defineField({
       name: 'challenges',
       title: 'Challenges & Solutions',
-      type: 'text',
-      rows: 4,
+      type: 'array',
+      of: [{ type: 'block' }],
       description: 'Technical challenges faced and how they were solved',
     }),
     defineField({
       name: 'learnings',
       title: 'Key Learnings',
-      type: 'text',
-      rows: 3,
+      type: 'array',
+      of: [{ type: 'block' }],
       description: 'What was learned from this project',
     }),
     defineField({

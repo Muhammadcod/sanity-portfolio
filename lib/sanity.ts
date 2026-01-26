@@ -29,7 +29,8 @@ export interface SanityProject {
   orderRank?: number
   technologies: string[]
   features?: string[]
-  challenges?: string[]
+  challenges?: any
+  learnings?: any
   solutions?: string[]
   liveUrl?: string
   githubUrl?: string

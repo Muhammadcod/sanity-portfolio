@@ -3,11 +3,50 @@
 import { ArrowLeft, ExternalLink, Github } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { SanityProject } from "@/lib/sanity";
+import { PortableText, type PortableTextComponents } from '@portabletext/react';
+
+const portableTextComponents: PortableTextComponents = {
+  block: {
+    h1: ({ children }) => <h1 className="text-3xl font-bold mt-6 mb-4">{children}</h1>,
+    h2: ({ children }) => <h2 className="text-2xl font-bold mt-6 mb-4">{children}</h2>,
+    h3: ({ children }) => <h3 className="text-xl font-bold mt-4 mb-2">{children}</h3>,
+    normal: ({ children }) => <p className="text-foreground/80 leading-relaxed mb-4">{children}</p>,
+    blockquote: ({ children }) => (
+      <blockquote className="my-4 border-l-4 border-foreground/20 pl-4 italic text-foreground/80">
+        {children}
+      </blockquote>
+    ),
+  },
+  list: {
+    bullet: ({ children }) => <ul className="list-disc list-outside pl-6 space-y-2 mb-4">{children}</ul>,
+    number: ({ children }) => <ol className="list-decimal list-outside pl-6 space-y-2 mb-4">{children}</ol>,
+  },
+  listItem: {
+    bullet: ({ children }) => <li className="marker:text-foreground/50">{children}</li>,
+    number: ({ children }) => <li className="marker:text-foreground/50">{children}</li>,
+  },
+  marks: {
+    link: ({ children, value }) => {
+      const href = value?.href || '#';
+      const isExternal = href?.startsWith('http');
+      return (
+        <a
+          href={href}
+          target={isExternal ? '_blank' : undefined}
+          rel={isExternal ? 'noopener noreferrer' : undefined}
+          className="text-foreground hover:underline underline-offset-4 decoration-foreground/30"
+        >
+          {children}
+        </a>
+      );
+    },
+    strong: ({ children }) => <strong className="font-semibold text-foreground">{children}</strong>,
+  }
+};
 
 type ProjectDetail = SanityProject & {
   images?: string[];
   displayStatus?: string;
-  learnings?: string;
 };
 
 export default function ProjectDetailClient({ project }: { project: ProjectDetail }) {
@@ -205,7 +244,9 @@ export default function ProjectDetailClient({ project }: { project: ProjectDetai
             <section ref={(el) => { sectionsRef.current[2] = el; }} className="mb-16">
               <h2 className="text-2xl font-bold mb-8">Challenges & Solutions</h2>
               <div className="p-6 rounded-lg bg-foreground/5 border border-foreground/10">
-                <p className="text-foreground/80 leading-relaxed">{project.challenges}</p>
+                <div className="prose prose-sm dark:prose-invert max-w-none">
+                  <PortableText value={project.challenges} components={portableTextComponents} />
+                </div>
               </div>
             </section>
           ) : null}
@@ -215,7 +256,9 @@ export default function ProjectDetailClient({ project }: { project: ProjectDetai
             <section ref={(el) => { sectionsRef.current[3] = el; }} className="mb-16">
               <h2 className="text-2xl font-bold mb-8">Key Learnings</h2>
               <div className="p-6 rounded-lg bg-foreground/5 border border-foreground/10">
-                <p className="text-foreground/80 leading-relaxed">{project.learnings}</p>
+                <div className="prose prose-sm dark:prose-invert max-w-none">
+                  <PortableText value={project.learnings} components={portableTextComponents} />
+                </div>
               </div>
             </section>
           ) : null}
