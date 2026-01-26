@@ -3,9 +3,11 @@
 import { getFeaturedProjects, getRecentArticles, SanityProject, SanityArticleSummary } from "@/lib/sanity";
 import Link from "next/link";
 import {useEffect, useRef, useState} from "react";
+import { useTheme } from "next-themes";
 
 export default function Home() {
-  const [isDark, setIsDark] = useState(true);
+  const { theme, setTheme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [activeSection, setActiveSection] = useState(0);
   const [projects, setProjects] = useState<SanityProject[]>([]);
   const [recentArticles, setRecentArticles] = useState<SanityArticleSummary[]>([]);
@@ -14,6 +16,10 @@ export default function Home() {
   const sectionNames = ["intro", "work", "projects", "thoughts", "connect"];
 
   console.log(projects)
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -45,10 +51,6 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    document.documentElement.classList.toggle("dark", isDark);
-  }, [isDark]);
-
-  useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -72,7 +74,7 @@ export default function Home() {
   }, []);
 
   const toggleTheme = () => {
-    setIsDark(!isDark);
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
   };
 
   return (
@@ -658,7 +660,7 @@ export default function Home() {
                 className="group rounded-lg border border-border p-3 transition-all duration-300 hover:border-muted-foreground/50"
                 aria-label="Toggle theme"
               >
-                {isDark ? (
+                {mounted && resolvedTheme === 'dark' ? (
                   <svg
                     className="h-4 w-4 text-muted-foreground transition-colors duration-300 group-hover:text-foreground"
                     fill="currentColor"
