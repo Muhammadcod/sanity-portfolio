@@ -300,7 +300,7 @@ export default function Home() {
         >
           <div className="space-y-12 sm:space-y-16">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-              <h2 className="font-light text-3xl sm:text-4xl">Selected Work</h2>
+              <h2 className="font-light text-3xl sm:text-4xl">Works</h2>
               <div className="font-mono text-muted-foreground text-sm">
                 2020 — 2025
               </div>
@@ -401,7 +401,7 @@ export default function Home() {
         >
           <div className="space-y-12 sm:space-y-16">
             <h2 className="font-light text-3xl sm:text-4xl">
-              Past Projects / Highlights
+              Projects
             </h2>
 
             <div className="grid gap-6 sm:gap-8 lg:grid-cols-2">
@@ -494,7 +494,7 @@ export default function Home() {
           className="min-h-screen py-20 opacity-0 sm:py-32"
         >
           <div className="space-y-12 sm:space-y-16">
-            <h2 className="font-light text-3xl sm:text-4xl">Recent Thoughts</h2>
+            <h2 className="font-light text-3xl sm:text-4xl">Articles</h2>
             <div className="grid gap-6 sm:gap-8 lg:grid-cols-2">
               {loadingArticles && (
                 <div className="text-muted-foreground">Loading articles...</div>
