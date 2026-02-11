@@ -246,7 +246,7 @@ export default function Home() {
                     <div className="h-2 w-2 animate-pulse rounded-full bg-green-500"/>
                     Available for work
                   </div>
-                  <div>Osogbo, Nigeria</div>
+                  <div>Remote</div>
                 </div>
               </div>
             </div>
