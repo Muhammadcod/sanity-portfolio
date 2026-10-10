@@ -25,7 +25,14 @@ export const projectsQuery = groq`
     liveUrl,
     githubUrl,
     demoUrl,
-    tags[]
+    tags[],
+    role,
+    problem,
+    approach,
+    result,
+    stackLayers[],
+    "buildImage": buildImage.asset->url,
+    "buildImageAlt": buildImage.alt
   }
 `
 
@@ -38,13 +45,23 @@ export const featuredProjectsQuery = groq`
     description,
     "image": image.asset->url,
     "imageAlt": image.alt,
+    "video": video.asset->url,
     category,
     status,
     technologies[],
      _createdAt,
      year,
     liveUrl,
-    githubUrl
+    githubUrl,
+    role,
+    problem,
+    approach,
+    challenges,
+    result,
+    learnings,
+    stackLayers[],
+    "buildImage": buildImage.asset->url,
+    "buildImageAlt": buildImage.alt
   }
 `
 
@@ -145,13 +162,16 @@ export const articleBySlugQuery = groq`
 
 // Query to fetch recent articles for the homepage Thoughts section
 export const recentArticlesQuery = groq`
-  *[_type == "article"] | order(publishedAt desc)[0...4] {
+  *[_type == "article"] | order(publishedAt desc)[0...12] {
     _id,
     title,
     slug,
+    author,
     excerpt,
     publishedAt,
     readTime,
-    tags[]
+    tags[],
+    externalUrl,
+    content
   }
 `
