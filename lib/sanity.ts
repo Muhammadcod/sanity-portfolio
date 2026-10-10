@@ -23,6 +23,14 @@ export interface SanityProject {
   longDescription?: string
   image?: string
   imageAlt?: string
+  video?: string
+  role?: string
+  problem?: any
+  approach?: any
+  result?: any
+  stackLayers?: string[]
+  buildImage?: string
+  buildImageAlt?: string
   category: string
   status: 'completed' | 'in-progress' | 'planned'
   featured: boolean
@@ -78,6 +86,9 @@ export interface SanityArticleSummary {
   publishedAt?: string
   readTime?: string
   tags?: string[]
+  author?: string
+  externalUrl?: string
+  content?: any
 }
 
 // Service functions for fetching project data

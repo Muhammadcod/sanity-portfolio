@@ -1,0 +1,113 @@
+/* Modernist design system — scoped to .mod so other routes keep the shadcn theme. */
+.mod {
+  --color-bg: #f3f2f2;
+  --color-surface: #eae9e9;
+  --color-text: #201e1d;
+  --color-accent: #ec3013;
+  --color-divider: color-mix(in srgb, #201e1d 40%, transparent);
+
+  --color-neutral-100: #f8f4f4;
+  --color-neutral-400: #bab6b6;
+  --color-neutral-700: #605d5d;
+  --color-neutral-900: #2d2b2b;
+
+  --color-accent-100: #fff2ef;
+  --color-accent-400: #ff9783;
+  --color-accent-600: #dd2b0f;
+  --color-accent-700: #ae1800;
+  --color-accent-800: #7c1405;
+
+  --font-body: var(--font-archivo), "Archivo", system-ui, sans-serif;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --shadow-lg: 0 12px 32px color-mix(in srgb, #2d2b2b 22%, transparent);
+
+  position: relative;
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.55;
+  overflow-x: clip;
+  transition: background 0.5s, color 0.5s;
+}
+
+/* "Ink" ground — driven by next-themes' .dark class */
+.dark .mod {
+  --color-bg: #201e1d;
+  --color-text: #f3f2f2;
+  --color-surface: #2d2b2b;
+  --color-divider: color-mix(in srgb, #f3f2f2 34%, transparent);
+  --color-accent-100: #4d170e;
+  --color-accent-700: #ff9783;
+  --color-accent-800: #ffc4b8;
+}
+
+.mod *, .mod *::before, .mod *::after { box-sizing: border-box; }
+.mod h1, .mod h2, .mod h3, .mod h4 {
+  font-family: var(--font-body);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  margin: 0 0 var(--space-2);
+}
+.mod p { margin: 0 0 var(--space-3); }
+.mod a { color: var(--color-accent); text-underline-offset: 3px; }
+.mod a:hover { color: var(--color-accent-600); }
+.mod :focus { outline: none; }
+.mod :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.mod ::selection { background: color-mix(in srgb, var(--color-accent) 30%, transparent); }
+.mod .grayscale { filter: grayscale(1) contrast(1.08); }
+
+/* buttons */
+.mod .btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  cursor: pointer; text-decoration: none;
+  font-family: var(--font-body); font-weight: 800; font-size: 14px; line-height: 1.2;
+  color: var(--color-text);
+  background: transparent; border: 1px solid transparent; border-radius: 0;
+  padding: var(--space-2) calc(var(--space-3) * 1.2);
+}
+.mod .btn-primary, .mod a.btn-primary { background: var(--color-accent); color: var(--color-bg); }
+.mod .btn-primary:hover, .mod a.btn-primary:hover { background: var(--color-accent-600); color: var(--color-bg); }
+.mod .btn-secondary { border-color: var(--color-divider); }
+.mod .btn-secondary:hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); }
+.mod .btn-ghost { color: var(--color-accent); padding-inline: var(--space-1); }
+
+.mod .tag {
+  display: inline-flex; align-items: center; font-size: 11px; letter-spacing: 0.02em; padding: 3px 10px;
+}
+.mod .tag-accent { background: var(--color-accent-100); color: var(--color-accent-800); }
+.mod .tag-outline { border: 1px solid var(--color-accent); color: var(--color-accent); }
+
+.mod .dialog-backdrop {
+  position: fixed; inset: 0; display: grid; place-items: center; padding: var(--space-4);
+  background: color-mix(in srgb, var(--color-neutral-900) 50%, transparent);
+}
+.mod .dialog {
+  width: min(440px, 100%); display: flex; flex-direction: column; gap: var(--space-3);
+  padding: var(--space-4); background: var(--color-surface); box-shadow: var(--shadow-lg);
+}
+.mod .dialog-title { font-weight: 800; font-size: 20px; }
+.mod .dialog-body { font-size: 14px; opacity: 0.85; }
+.mod .dialog-actions { display: flex; justify-content: flex-end; gap: var(--space-2); margin-top: var(--space-2); }
+
+/* hover helpers (the design used style-hover) */
+.mod .m-copy:hover { background: var(--color-text) !important; }
+.mod .m-soc { transition: padding 0.35s cubic-bezier(0.2, 0.9, 0.2, 1), color 0.2s; }
+.mod .m-soc:hover { padding-left: 12px !important; color: var(--color-neutral-900) !important; }
+.mod .m-art { transition: padding 0.35s cubic-bezier(0.2, 0.9, 0.2, 1), color 0.25s; }
+.mod .m-art:hover { padding-left: 12px !important; color: var(--color-accent) !important; }
+.mod .m-flink:hover { color: var(--color-accent) !important; }
+
+@media (pointer: fine) {
+  .mod[data-cur="on"], .mod[data-cur="on"] * { cursor: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mod * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
