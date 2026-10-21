@@ -126,11 +126,11 @@ export default function ProjectsListClient({ initialProjects }: Props) {
             key={project._id}
             role="link"
             tabIndex={0}
-            onClick={() => router.push(`/projects/${project.slug?.current || ""}`)}
+            onClick={() => router.push(`/?project=${project.slug?.current || ""}`)}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault();
-                router.push(`/projects/${project.slug?.current || ""}`);
+                router.push(`/?project=${project.slug?.current || ""}`);
               }
             }}
             className="group block rounded-lg border border-border p-6 transition-all duration-500 hover:border-muted-foreground/50 hover:shadow-lg sm:p-8 cursor-pointer"

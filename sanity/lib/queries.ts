@@ -25,7 +25,8 @@ export const projectsQuery = groq`
     liveUrl,
     githubUrl,
     demoUrl,
-    tags[]
+    tags[],
+    "gallery": gallery[].asset->url
   }
 `
 
@@ -153,5 +154,23 @@ export const recentArticlesQuery = groq`
     publishedAt,
     readTime,
     tags[]
+  }
+`
+
+// Query to fetch recent articles with full content for the homepage reader
+export const homeArticlesQuery = groq`
+  *[_type == "article"] | order(publishedAt desc)[0...4] {
+    _id,
+    title,
+    slug,
+    author,
+    excerpt,
+    "coverImage": coverImage.asset->url,
+    "coverImageAlt": coverImage.alt,
+    publishedAt,
+    readTime,
+    tags[],
+    externalUrl,
+    content
   }
 `
