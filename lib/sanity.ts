@@ -7,6 +7,7 @@ import {
   projectsQuery,
   projectStatsQuery,
   articleBySlugQuery,
+  homeArticlesQuery,
   recentArticlesQuery
 } from '@/sanity/lib/queries'
 
@@ -36,6 +37,7 @@ export interface SanityProject {
   githubUrl?: string
   demoUrl?: string
   tags?: string[]
+  gallery?: string[]
   relatedProjects?: SanityProject[]
 }
 
@@ -261,6 +263,22 @@ export class ArticleService {
       return []
     }
   }
+
+  /**
+   * Fetch recent articles with full content for the homepage reader
+   */
+  static async getHomeArticles(): Promise<SanityArticle[]> {
+    try {
+      const articles = await client.fetch(homeArticlesQuery, {}, {
+        cache: 'force-cache',
+        next: { revalidate: 1800 }
+      })
+      return articles || []
+    } catch (error) {
+      console.error('Error fetching homepage articles:', error)
+      return []
+    }
+  }
 }
 
 // Export individual functions for convenience
@@ -274,4 +292,4 @@ export const {
   searchProjects
 } = ProjectService
 
-export const { getArticleBySlug, getRecentArticles } = ArticleService
+export const { getArticleBySlug, getRecentArticles, getHomeArticles } = ArticleService
