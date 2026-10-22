@@ -422,7 +422,7 @@ export function Portfolio({ projects, articles }: PortfolioProps) {
             </a>
           </div>
           <div ref={portraitRef} className={s.portrait}>
-            <Shot alt="Mohammed Adebayo" label="portrait" light sizes="300px" />
+            <Shot src="/images/portrait.jpg" alt="Mohammed Adebayo" label="portrait" light sizes="300px" />
             <span className={s.portraitTag}>hi 👋 that&apos;s me</span>
           </div>
           <div className={s.terminal}>
